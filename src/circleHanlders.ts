@@ -13,31 +13,14 @@ export type CircleHandlersSettings = typeof defSettings;
 export class CircleHandlers {
     controller: CircleCarousel;
     thumbController: CircleSlider;
-    elm: HTMLElement;
     radius: number;
     center: Point;
     settings: CircleHandlersSettings;
     handlerPoints: Point[] = []
 
     constructor(controller: CircleCarousel, thumbController: CircleSlider, settings = defSettings) {
-        const elm = document.createElement("div")
-        //size
-        elm.style.width = controller.size * settings.sizeMultipler + "px";
-        elm.style.height = controller.size * settings.sizeMultipler + "px";
         this.radius = controller.size * settings.sizeMultipler / 2
-
-        //border
-        // elm.style.border = `5px solid blue`
-        elm.style.borderRadius = "50%"
-
-        //postion
-        Utils.makeAbsoluteAndCenter(elm)
-
-        elm.style.zIndex = "99"
-        controller.root.appendChild(elm)
-
         this.controller = controller;
-        this.elm = elm;
         this.center = new Point(controller.size / 2, controller.size / 2)
         this.settings = settings
         this.thumbController = thumbController;
@@ -65,6 +48,7 @@ export class CircleHandlers {
             elm.style.top = point.y + "px"
             elm.style.width = "100px"
             elm.style.cursor = "pointer"
+            elm.style.zIndex = "102"
             elm.style.backgroundColor = 'red'
             this.controller.root.appendChild(elm)
             const p = i * (100 / this.controller.settings.items.length)

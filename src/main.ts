@@ -26,5 +26,9 @@ new CircleCarousel("#circle", {
       img: "/public/img5.jpeg",
       category: "vilage"
     },
+    {
+      img: "/public/img6.jpg",
+      category: "watch"
+    }
   ]
 })

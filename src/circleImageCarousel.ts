@@ -61,6 +61,7 @@ export class CircleCarousel {
             const child = document.createElement('img')
             child.setAttribute("src", item.img)
             child.style.height = this.size + "px"
+            child.style.userSelect = "none"
 
             if (this.settings.forceImageToFit) {
                 child.style.width = this.size + "px"
