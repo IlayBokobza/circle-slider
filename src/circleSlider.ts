@@ -52,27 +52,17 @@ export class CircleSlider {
 
         thumb.style.cursor = "pointer"
         thumb.style.zIndex = "102"
-        thumb.addEventListener('mousedown', () => this.moveRelativeToMouse())
-        document.body.addEventListener('mouseup', () => this.stopMovingRelativeToMouse())
+        thumb.addEventListener('mousedown', () => {
+            this.moveRelativeToMouse()
+            document.addEventListener('mouseup', () => this.stopMovingRelativeToMouse(), { once: true })
+        })
         controller.root.appendChild(thumb)
-
-        this.enableSnap()
 
         this.controller = controller;
         this.elm = elm;
         this.thumb = thumb;
         this.thumb.draggable = false
         this.center = new Point(controller.size / 2, controller.size / 2)
-    }
-
-    snapWrapper = () => this.snapThump()
-
-    enableSnap() {
-        document.addEventListener('mouseup', this.snapWrapper)
-    }
-
-    disableSnap() {
-        document.removeEventListener('mouseup', this.snapWrapper)
     }
 
     getLineFunc(slop: number) {
@@ -108,15 +98,17 @@ export class CircleSlider {
     mouseMoveEventListenrWrapper = (e: MouseEvent) => this.moveMoveEventListener(e)
 
     moveRelativeToMouse() {
-        document.body.addEventListener('mousemove', this.mouseMoveEventListenrWrapper)
+        document.addEventListener('mousemove', this.mouseMoveEventListenrWrapper)
     }
 
     stopMovingRelativeToMouse() {
-        document.body.removeEventListener("mousemove", this.mouseMoveEventListenrWrapper)
+        document.removeEventListener("mousemove", this.mouseMoveEventListenrWrapper)
+        this.snapThump()
     }
 
     //snaps the thumb to the closet full item in carousel
     snapThump() {
+        console.log('here')
         if (!this.handlerPoints) {
             throw new Error("Handler Points must be provided for thumb snapping to be enabled")
         }

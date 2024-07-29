@@ -56,7 +56,6 @@ export class CircleHandlers {
             elm.addEventListener('click', () => {
                 this.thumbController.animateToPercentage(p, i * 100)
             })
-            elm.addEventListener('mouseup', e => e.stopPropagation())
 
             this.handlerPoints.push(point)
 

@@ -29,6 +29,7 @@ export class CircleCarousel {
 
         this.root = root as HTMLElement;
         this.root.style.position = "relative"
+        this.root.style.userSelect = 'none'
         this.settings = settings;
 
         //create elm
