@@ -52,11 +52,12 @@ export class CircleHandlers {
             elm.style.backgroundColor = 'red'
             this.controller.root.appendChild(elm)
             const p = i * (100 / this.controller.settings.items.length)
+
             elm.addEventListener('click', () => {
-                this.thumbController.disableSnap()
                 this.thumbController.animateToPercentage(p, i * 100)
-                this.thumbController.enableSnap()
             })
+            elm.addEventListener('mouseup', e => e.stopPropagation())
+
             this.handlerPoints.push(point)
 
             i++;

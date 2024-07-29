@@ -149,6 +149,32 @@ export class CircleSlider {
                 p = 100
             }
         }
+        else {
+            const start = this.getPercentage()
+            const forward = p - start
+            const backward = start > 50 ? 100 - start + p : 100 - p + start;
+
+            //if going backwards is faster
+            if (Math.abs(backward) < Math.abs(forward)) {
+                const half = start > 50 ? 100 : 0.1
+                Utils.animateNumber(
+                    start,
+                    half,
+                    time / 2,
+                    (v: number) => this.moveToPercentage(v),
+                    () => {
+                        //on complete
+                        Utils.animateNumber(
+                            half === 100 ? 0.1 : 100,
+                            p,
+                            time / 2,
+                            (v: number) => this.moveToPercentage(v),
+                        )
+                    }
+                )
+                return;
+            }
+        }
 
         Utils.animateNumber(this.getPercentage(), p, time, (v) => this.moveToPercentage(v))
     }
